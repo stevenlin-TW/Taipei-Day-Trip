@@ -37,7 +37,7 @@ def getData():
 			cursor2.execute("""SELECT COUNT(`id`) FROM `taipei`""")
 			data_num = cursor2.fetchone()   #後續看看會不會跟後面的cursor2打架
 			if (page_num*12) > data_num[0]:
-				get_num = data_num[0] - page*12
+				get_num = data_num[0] - start
 				page_num = None
 			cursor.execute("""SELECT `att_id`, `name`, `category`, `address`, `mrt`, `lat`, `lng`, `transport`, 
 			`description` FROM `taipei` ORDER BY `att_id` LIMIT %s,%s""", (start, get_num))
@@ -45,14 +45,12 @@ def getData():
 		else:
 			cursor2.execute("""SELECT COUNT(`att_id`) FROM `taipei` WHERE `category` = %s OR `name` LIKE %s""",(keyword, '%'+keyword+'%'))
 			data_num = cursor2.fetchone()
-			print(data_num[0])
-			if end > data_num[0]:
-				end = data_num[0]
+			if (page_num*12) > data_num[0]:
+				get_num = data_num[0] - start
 				page_num = None
-			cursor.execute("""SELECT `att_id`, `name`, `category`, `address`, `mrt`, `lat`, `lng`,
-			`transport`, `description` FROM `taipei` WHERE `category` = %s OR `name` LIKE %s LIMIT %s,%s""",(keyword, '%'+keyword+'%', start, end)) 
+			cursor.execute("""SELECT `att_id`, `name`, `category`, `address`, `mrt`, `lat`, `lng`, `transport`, 
+			`description` FROM `taipei` WHERE `category` = %s OR `name` LIKE %s LIMIT %s,%s""",(keyword, '%'+keyword+'%', start, get_num)) 
 			page_data = cursor.fetchall()
-			print(page_data)
 		for d in page_data:
 				cursor2.execute("""SELECT `img_url` FROM `att_image` WHERE `att_id`= %s""", (d["att_id"],))
 				url_tuple = cursor2.fetchall()
@@ -106,12 +104,10 @@ def getCat():
 	try:
 		cursor.execute("""SELECT `category` from `taipei` GROUP BY `category`""")
 		page_data = cursor.fetchall()
-		print(page_data)
 		cat_list = []
 		for d in page_data:
 			cat_list.append(d[0])
 		normalized_cat_list = [unicodedata.normalize("NFKC", line) for line in cat_list]
-		print(normalized_cat_list)
 		return jsonify(data = normalized_cat_list)
 	except:
 		return jsonify(error = True, message = "伺服器內部錯誤"),500
