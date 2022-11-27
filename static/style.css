@@ -1,0 +1,229 @@
+*{
+    margin: 0px;
+    box-sizing: border-box;
+}
+
+html, body{
+    height: 100%;
+}
+
+nav{
+    width:100%;
+    position: fixed;
+    top: 0px;
+    display: grid;
+    background-color: white;
+    padding: 10px;
+    z-index: 10;
+}
+
+nav > .top_box{
+    width: inherit;
+    display: grid;
+    grid-template-columns: auto 175px;
+    align-items: center;
+}
+
+nav > .top_box > .title{
+    justify-self: start;
+    font-size: 30px;
+    color: #448899;
+}
+
+nav > .top_box > .option_list{
+    display: grid;
+    grid-auto-flow: column;
+    justify-content: space-between;
+    padding: 10px;
+}
+
+nav > .top_box > .option_list > .option{
+    font-size: 16px;
+}
+
+main{
+    padding-top: 62px;
+    width: 100%;
+    min-height: 100%;
+}
+
+
+.heroSection{
+    width: 100%;
+    height: 320px;
+    position: relative;
+    z-index: -1;
+}
+
+.heroSection > .heroSection_image{
+    width: 100%;
+    height: 320px;
+    object-fit: cover;
+    position: absolute;
+    z-index: -1;
+}
+
+.slogan_container{
+    display: grid;
+    width: 100%;
+    position: absolute;
+    top: 137px;
+    padding: 10px 10px 10px 20px;
+}
+
+.slogan_container > .slogan{
+    display: grid;
+    width: 100%;
+}
+
+.slogan_container > .slogan > .first_line{
+    width: 100%;
+    font-size: 28px;
+    font-weight: bold;
+    color: #F8F8F8;
+    justify-self: start;
+}
+
+.slogan_container > .slogan > .second_line{
+    font-size: 16px;
+    font-weight: bold;
+    margin-top: 15px;
+    color: #F8F8F8;
+}
+
+.slogan_container > .slogan > .search_box{
+    display: flex;
+    margin-top: 25px;
+}
+
+.slogan_container > .slogan > .search_box > .search_bar{
+    padding: 15px;
+    width: 66.7%;
+    font-size: 16px;
+}
+
+.slogan_container > .slogan > .search_box > .search_icon_box{
+    width: 60px;
+    background-color: #448899;
+    display: grid;
+    justify-items: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.slogan_container > .slogan > .search_box > .search_icon_box > .search_icon{
+    width:30px;
+}
+
+.slogan_container > .cat_list{
+    width: 400px;
+    /* height: 500px; */
+    background-color: white;
+    border-radius: 5px;
+    box-shadow: 0px 0px 20px #AABBCC;
+    z-index: 8;
+    margin-top: 2px;
+    display: none;
+}
+
+.slogan_container > .cat_list > .category_item{
+    text-align: center;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.attraction_list{
+    display: grid;
+    margin-top: 40px;
+    padding: 15px;
+}
+
+.attraction_list > .attraction_group{
+    width:100%;
+    display: grid;
+    grid-template-columns: 90%;
+    grid-gap: 30px;
+    justify-content: center;
+}
+
+.item{
+    background-color: aqua;
+    display: grid;
+    border: 1px solid #E8E8E8;
+    border-radius: 5px;
+}
+
+.detail1{
+    width: 100%;
+    height: 200px;
+    position: relative;
+
+}
+
+.detail1 > img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 1;
+}
+
+.detail1 > .name{
+    width: 100%;
+    color: white;
+    background-color: rgb(0,0,0,0.5);
+    z-index: 2;
+    position: absolute;
+    bottom: 0px;
+    padding: 10px;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.detail2{
+    background-color: rgb(255,255,255);
+    display: grid;
+    grid-template-columns: repeat(2, 50%);
+    padding: 10px;
+    align-items: center;
+}
+
+.detail2 > .mrt{
+    justify-self: start;
+    font-size: 16px;
+    color: #757575;
+}
+
+.detail2 > .category{
+    justify-self: end;
+    font-size: 16px;
+    color: #757575;
+}
+
+footer{
+    display: flex;
+    font-family: 'Noto Sans TC';
+    font-style: normal;
+    font-weight: bold;
+    font-size: 16px;
+    color:white;
+    background-color: #757575;
+    width: 100%;
+    height: 104px;
+    text-align: center;
+    justify-content: center; align-items: center;
+}
+
+
+
+@media(min-width:600px){
+    .slogan_container > .slogan > .search_box > .search_bar{width: 400px;}
+    .attraction_list > .attraction_group{grid-template-columns: repeat(2, 45%);}
+}
+
+@media(min-width:1200px){
+    nav{justify-content: center;}
+    nav > .top_box{width: 1200px;}
+    .slogan_container{justify-content: center;}
+    .slogan_container > .slogan{width:1200px;}
+    .attraction_list > .attraction_group{grid-template-columns: repeat(4, 270px);}
+}
