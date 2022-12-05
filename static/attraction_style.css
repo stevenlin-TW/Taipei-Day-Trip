@@ -151,6 +151,10 @@ main{
     margin-top: 15px;
 }
 
+.image_profile > .profile > .booking_form > .booking_date > .date{
+    padding: 5px 10px 5px 10px;
+}
+
 .image_profile > .profile > .booking_form > .booking_time{
     display: grid;
     grid-auto-flow: column;
