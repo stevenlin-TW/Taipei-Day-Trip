@@ -13,7 +13,7 @@ fetch(url).then((response) => {
         //console.log(id)
         let item = document.createElement("div");
         item.className = "item";
-        item.id = "item" + id.toString();
+        item.id = id.toString();
         //console.log(item.id);
         attraction_group.appendChild(item);
 
@@ -46,6 +46,13 @@ fetch(url).then((response) => {
         cat.textContent = data["data"][i]["category"];
         document.getElementById(detail2.id).appendChild(cat);
     };
+
+    let attractions = document.getElementsByClassName("item");
+    for(let i=0; i<attractions.length; i++){
+        attractions[i].addEventListener("click", () => {
+            window.location.href = "http://127.0.0.1:3000/attraction/" + attractions[i].id;
+        })
+    }
     page = data["nextPage"];
     console.log(page);
     isLoading = false;
@@ -72,7 +79,7 @@ const callback = (entries, observer) => {
                     //console.log(id)
                     let item = document.createElement("div");
                     item.className = "item";
-                    item.id = "item" + id.toString();
+                    item.id = id.toString();
                     //console.log(item.id);
                     attraction_group.appendChild(item);
 
@@ -105,9 +112,18 @@ const callback = (entries, observer) => {
                     cat.textContent = data["data"][i]["category"];
                     document.getElementById(detail2.id).appendChild(cat);
                 };
+
+                let attractions = document.getElementsByClassName("item");
+                for(let i=0; i<attractions.length; i++){
+                    attractions[i].addEventListener("click", () => {
+                        window.location.href = "http://127.0.0.1:3000/attraction/" + attractions[i].id;
+                    })
+                }
                 page = data["nextPage"];
                 console.log(page);
                 isLoading = false;
+
+
             })
         };
     };
@@ -140,7 +156,7 @@ search.addEventListener("click", () => {
                     //console.log(id)
                     let item = document.createElement("div");
                     item.className = "item";
-                    item.id = "item" + id.toString();
+                    item.id = id.toString();
                     //console.log(item.id);
                     attraction_group.appendChild(item);
 
@@ -172,7 +188,14 @@ search.addEventListener("click", () => {
                     cat.className = "category";
                     cat.textContent = data["data"][i]["category"];
                     document.getElementById(detail2.id).appendChild(cat);
-                }
+                };
+
+                let attractions = document.getElementsByClassName("item");
+                for(let i=0; i<attractions.length; i++){
+                    attractions[i].addEventListener("click", () => {
+                        window.location.href = "http://127.0.0.1:3000/attraction/" + attractions[i].id;
+                    })
+                };
                 page = data["nextPage"];
                 console.log(page);
                 isLoading = false;

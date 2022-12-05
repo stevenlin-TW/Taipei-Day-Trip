@@ -116,7 +116,7 @@ main{
 }
 
 .slogan_container > .cat_list{
-    width: 400px;
+    width: 66.7%;
     /* height: 500px; */
     background-color: white;
     border-radius: 5px;
@@ -147,10 +147,16 @@ main{
 }
 
 .item{
-    background-color: aqua;
+    
     display: grid;
     border: 1px solid #E8E8E8;
     border-radius: 5px;
+    cursor: pointer;
+}
+
+.item:hover{
+    background-color: white;
+    opacity: 0.75;
 }
 
 .detail1{
@@ -213,10 +219,9 @@ footer{
     justify-content: center; align-items: center;
 }
 
-
-
 @media(min-width:600px){
     .slogan_container > .slogan > .search_box > .search_bar{width: 400px;}
+    .slogan_container > .cat_list{width: 400px;}
     .attraction_list > .attraction_group{grid-template-columns: repeat(2, 45%);}
 }
 
