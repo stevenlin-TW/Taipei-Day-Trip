@@ -2,7 +2,6 @@ var page = 0;
 let keyword = document.getElementById("search_bar").value;
 let isLoading = false;
 let url = "http://127.0.0.1:3000/api/attractions?page=" + page.toString();
-console.log(url);
 isLoading = true;
 fetch(url).then((response) => {
     return response.json();
@@ -10,18 +9,15 @@ fetch(url).then((response) => {
     let attraction_group = document.getElementById("attraction_group");
     for(let i=0; i<data["data"].length; i++){
         let id = data["data"][i]["id"];
-        //console.log(id)
         let item = document.createElement("div");
         item.className = "item";
         item.id = id.toString();
-        //console.log(item.id);
         attraction_group.appendChild(item);
 
         // detail1
         let detail1 = document.createElement("div");
         detail1.className = "detail1";
         detail1.id = "item" + id.toString() + "_detail1";
-        //console.log(detail1.id);
         document.getElementById(item.id).appendChild(detail1);
         let pic_url = data["data"][i]["image"][0];
         let pic = document.createElement("img");
@@ -54,7 +50,6 @@ fetch(url).then((response) => {
         })
     }
     page = data["nextPage"];
-    console.log(page);
     isLoading = false;
 });
 
@@ -68,7 +63,6 @@ const callback = (entries, observer) => {
             }else{
                 url = "http://127.0.0.1:3000/api/attractions?page=" + page.toString();
             }
-            console.log(url);
             isLoading = true;
             fetch(url).then((response) => {
                 return response.json();
@@ -76,18 +70,15 @@ const callback = (entries, observer) => {
                 let attraction_group = document.getElementById("attraction_group");
                 for(let i=0; i<data["data"].length; i++){
                     let id = data["data"][i]["id"];
-                    //console.log(id)
                     let item = document.createElement("div");
                     item.className = "item";
                     item.id = id.toString();
-                    //console.log(item.id);
                     attraction_group.appendChild(item);
 
                     // detail1
                     let detail1 = document.createElement("div");
                     detail1.className = "detail1";
                     detail1.id = "item" + id.toString() + "_detail1";
-                    //console.log(detail1.id);
                     document.getElementById(item.id).appendChild(detail1);
                     let pic_url = data["data"][i]["image"][0];
                     let pic = document.createElement("img");
@@ -120,7 +111,6 @@ const callback = (entries, observer) => {
                     })
                 }
                 page = data["nextPage"];
-                console.log(page);
                 isLoading = false;
 
 
@@ -143,28 +133,24 @@ search.addEventListener("click", () => {
         page = 0;
         document.getElementById("attraction_group").innerHTML = "";
         url = "http://127.0.0.1:3000/api/attractions?page=" + page.toString() + "&keyword=" + keyword;
-        console.log(url);
         isLoading = true;
         fetch(url).then((response) => {
             return response.json();
         }).then((data) => {
-            console.log(data["data"]);
+            //console.log(data["data"]);
             if (data["data"]!=""){
                 let attraction_group = document.getElementById("attraction_group");
                 for(let i=0; i<data["data"].length; i++){
                     let id = data["data"][i]["id"];
-                    //console.log(id)
                     let item = document.createElement("div");
                     item.className = "item";
                     item.id = id.toString();
-                    //console.log(item.id);
                     attraction_group.appendChild(item);
 
                     // detail1
                     let detail1 = document.createElement("div");
                     detail1.className = "detail1";
                     detail1.id = "item" + id.toString() + "_detail1";
-                    //console.log(detail1.id);
                     document.getElementById(item.id).appendChild(detail1);
                     let pic_url = data["data"][i]["image"][0];
                     let pic = document.createElement("img");
@@ -197,7 +183,6 @@ search.addEventListener("click", () => {
                     })
                 };
                 page = data["nextPage"];
-                console.log(page);
                 isLoading = false;
                 observer.observe(footer);
             }else{
@@ -220,7 +205,6 @@ let cat_url = "http://127.0.0.1:3000/api/categories";
 fetch(cat_url).then((response) => {
     return response.json();
 }).then((categories) => {
-    console.log(categories);
     for(let i=0; i<categories["data"].length; i++){
         let category_item = document.createElement("div");
         category_item.textContent = categories["data"][i];
@@ -230,7 +214,6 @@ fetch(cat_url).then((response) => {
 
     let category = document.querySelectorAll(".category_item");
     for(let i=0; i<category.length; i++){
-        console.log(category[i].innerText);
         category[i].addEventListener("mouseover", () => {
             category[i].style.backgroundColor = "#E8E8E8"
         })
@@ -253,5 +236,3 @@ search_bar.addEventListener("click", () =>{
     cat_list.style.fontSize = "14px";
     
 })
-
-

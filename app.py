@@ -2,6 +2,8 @@ from flask import *
 from pool import pool
 import urllib.error
 import unicodedata
+import jwt
+import time
 app=Flask(__name__)
 app.config["JSON_AS_ASCII"]=False
 app.config["TEMPLATES_AUTO_RELOAD"]=True
@@ -33,7 +35,6 @@ def getData():
 	get_num = 12
 	page_num = page + 1
 	keyword = request.args.get("keyword")
-	print(keyword)
 	if keyword == None:
 		cursor2.execute("""SELECT COUNT(`id`) FROM `taipei`""")
 		data_num = cursor2.fetchone()   #後續看看會不會跟後面的cursor2打架
@@ -120,16 +121,77 @@ def getCat():
 	cnx = pool.get_connection()
 	cursor = cnx.cursor()
 	try:
-		cursor.execute("""SELECT `category` from `taipei` GROUP BY `category`""")
+		cursor.execute("""SELECT `category` FROM `taipei` GROUP BY `category`""")
 		page_data = cursor.fetchall()
 		cat_list = []
 		for d in page_data:
 			cat_list.append(d[0])
 		normalized_cat_list = [unicodedata.normalize("NFKC", line) for line in cat_list]
-		return jsonify(data = normalized_cat_list)
+		return jsonify(data = normalized_cat_list),200
 	except:
 		return jsonify(error = True, message = "伺服器內部錯誤"),500
 	finally:
 		cursor.close()
 		cnx.close()
+
+@app.route("/api/user", methods=["POST"])
+def SignUp():
+	try:
+		body = request.get_json()
+		#print(body["password"])
+		cnx = pool.get_connection()
+		cursor = cnx.cursor()
+		cursor.execute("""SELECT `id` FROM `member` WHERE `email` = %s""", (body["email"],))
+		result = cursor.fetchall()
+		if result != []:
+			return jsonify(error = True, message = "註冊失敗，重複的 Email 或其他原因"),400
+		cursor.execute("""INSERT INTO `member`(`name`, `email`, `password`) VALUES (%s, %s, %s)""", (body["name"], body["email"], body["password"]))
+		cnx.commit()
+		return jsonify(ok = True),200
+	except:
+		return jsonify(error = True, message = "伺服器內部錯誤"),500
+	finally:
+		cursor.close()
+		cnx.close()
+
+@app.route("/api/user/auth", methods=["GET", "PUT", "DELETE"])
+def SingIn():
+	if request.method == "PUT":
+		try:
+			body = request.get_json()
+			cnx = pool.get_connection()
+			cursor = cnx.cursor()
+			cursor.execute("""SELECT `id`, `name`, `email` FROM `member` WHERE `email` = %s AND `password` = %s""", (body["email"], body["password"]))
+			result = cursor.fetchall()
+			if result == []:
+				return jsonify(error = True, message = "登入失敗，帳號或密碼錯誤或其他原因"),400
+			token = jwt.encode({"id" : result[0][0], "name" : result[0][1], "email" : result[0][2]}, "secret", algorithm="HS256")
+			resp = make_response(jsonify(ok = True))
+			resp.set_cookie("token", value=token, expires=time.time()+7*24*60*60)
+			return resp, 200
+		except:
+			return jsonify(error = True, message = "伺服器內部錯誤"),500
+		finally:
+			cursor.close()
+			cnx.close()
+		
+	elif request.method == "GET":
+		try:
+			token = request.cookies.get("token")
+			if token != "":
+				member_info = jwt.decode(token, "secret", algorithms=["HS256"])
+				return jsonify(data = member_info)
+			else:
+				return jsonify(data = None)
+		except:
+			return jsonify(data = None)
+
+	elif request.method == "DELETE":
+		resp = make_response(jsonify(ok = True))
+		resp.set_cookie(key="token", value="", expires=0)
+		return resp
+		
+		
+
+
 app.run(port=3000, host="0.0.0.0")
