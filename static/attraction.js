@@ -5,7 +5,6 @@ const url = "http://127.0.0.1:3000/api/attraction/" + id;
 fetch(url).then((response) => {
     return response.json();
 }).then((data) => {
-    console.log(data);
     let image_num = data["data"]["image"].length;
     for(let i=0; i<image_num; i++){
         let image_box = document.createElement("div");
