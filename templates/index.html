@@ -23,7 +23,7 @@
                 <div class="sign" id="sign_in">
                     <div class="sign_title">登入會員帳號</div>
                     <img class="icon_close" src={{ url_for ('static', filename='icon_close.png') }} alt="close" />
-                    <form onsubmit="signIn()">
+                    <form onsubmit="return false;">
                         <input class="dialog_input" id="email" type="text" placeholder="輸入電子信箱" pattern="^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$" required autofocus/>
                         <input class="dialog_input" id="password" type="password" placeholder="輸入密碼" required />
                         <button type="submit" class="dialog_btn" id="sign_in_btn">登入帳戶</button>
@@ -34,7 +34,7 @@
                 <div class="sign" id="sign_up" style="display: none;">
                     <div class="sign_title">註冊會員帳號</div>
                     <img class="icon_close" src={{ url_for ('static', filename='icon_close.png') }} alt="close" />
-                    <form onsubmit="signUp()">
+                    <form onsubmit="return false;">
                         <input class="dialog_input" id="new_name" type="text" placeholder="輸入姓名" pattern="[a-zA-Z0-9]+" required autofocus/>
                         <input class="dialog_input" id="new_email" type="text" placeholder="輸入電子信箱" pattern="^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$" required />
                         <input class="dialog_input" id="new_password" type="password" placeholder="輸入密碼" pattern="[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-@]" minlength="8" maxlength="15" required />

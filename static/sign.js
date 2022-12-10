@@ -63,7 +63,9 @@ dialog_inputs.forEach( dialog_input => {
     })
 })
 
-function signUp(){
+// Sign Up
+let sign_up_btn = document.getElementById("sign_up_btn");
+sign_up_btn.addEventListener("click", () => {
     let new_name = document.getElementById("new_name").value;
     let new_email = document.getElementById("new_email").value;
     let new_password = document.getElementById("new_password").value;
@@ -94,16 +96,18 @@ function signUp(){
             }else if(Object.keys(data).includes("error")){
                 document.getElementById("sign_up_response_text").style.display = "block";
                 document.getElementById("sign_up_response_text").textContent = data.message;
+                return false;
             };
         })
     
     document.getElementById("new_name").value = "";
     document.getElementById("new_email").value = "";
     document.getElementById("new_password").value = "";
-}
+})
 
-
-function signIn(){
+// Sign In
+let sign_in_btn = document.getElementById("sign_in_btn");
+sign_in_btn.addEventListener("click", () => {
     let email = document.getElementById("email").value;
     let password = document.getElementById("password").value;
 
@@ -132,11 +136,10 @@ function signIn(){
             }else if(Object.keys(data).includes("error")){
                 document.getElementById("sign_in_response_text").style.display = "block";
                 document.getElementById("sign_in_response_text").textContent = data.message;
-                // document.getElementById("email").value = "";
-                // document.getElementById("password").value = "";
             };
         })
-}
+})
+
 // Sign Out
 let sign_out = document.getElementById("sign_out");
 sign_out.addEventListener("click", () => {

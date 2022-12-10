@@ -69,6 +69,7 @@ dialog > .dialog_box{
     width: 100%;
     justify-content: center;
     padding: 15px 0 15px 0;
+    position: relative;
 }
 
 dialog > .decorator_bar{
@@ -88,6 +89,14 @@ dialog > .dialog_box > .sign > .sign_title{
     font-weight: bold;
     font-size: 24px;
     color: #666666;
+}
+
+dialog > .dialog_box > .sign > .icon_close{
+    width: 16px;height: 16px;
+    position: absolute;
+    top: 17px;
+    right: 17px;
+    z-index: 2;
 }
 
 dialog > .dialog_box > .sign form{
