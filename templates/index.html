@@ -7,16 +7,7 @@
         <link rel="stylesheet" type="text/css" href={{ url_for('static', filename='style.css') }} />
     </head>
     <body>
-        <nav>
-            <div class="top_box">
-                <div class="title">台北一日遊</div>
-                <div class="option_list">
-                    <div class="option" id="booking">預定行程</div>
-                    <div class="option" id="sign_in_up">登入/註冊</div>
-                    <div class="option" id="sign_out" style="display: none;">登出系統</div>
-                </div>
-            </div>
-        </nav>
+        <nav></nav>
         <dialog id="dialog">
             <div class="decorator_bar"></div>
             <div class="dialog_box">
@@ -65,6 +56,7 @@
             </div>
         </main>
         <footer id="footer">COPYRIGHT © 2021 台北一日遊</footer>
+        <script src={{ url_for("static", filename = "nav.js")}}></script>
         <script src={{ url_for("static", filename = "fetch2.js")}}></script>
         <script src={{ url_for("static", filename = "sign.js")}}></script>
     </body>

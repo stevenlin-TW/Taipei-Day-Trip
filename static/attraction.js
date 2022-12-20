@@ -1,6 +1,6 @@
 let path_name = document.location.pathname;
 const id = path_name.split("/").pop();
-const url = "http://127.0.0.1:3000/api/attraction/" + id;
+const url = "/api/attraction/" + id;
 
 fetch(url).then((response) => {
     return response.json();
@@ -81,4 +81,71 @@ morning.addEventListener("click", () => {
 afternoon.addEventListener("click", () => {
     document.getElementById("fee1").style.display = "none";
     document.getElementById("fee2").style.display = "block";
+})
+
+//booking schedule
+const booking_url = "/api/booking";
+let booking_btn = document.querySelector(".booking_btn");
+booking_btn.addEventListener("click", () => {
+    // Check User Status
+    let check_url = "/api/user/auth"; 
+    fetch(check_url, {
+        method : "GET"
+    }).then(response => response.json()).then((data) => {
+        if(data["data"] != null){
+            let booking_date_text = document.querySelector(".date").value;
+            const now = new Date();
+            const booking_date = new Date(booking_date_text);
+            if(booking_date.getTime() < now.getTime()){
+                error_message = document.getElementById("error_message");
+                error_message.textContent = "日期選擇有誤";
+                error_message.style.display = "block";
+            } else {
+                error_message.style.display = "none";
+                // get radio value
+                let guide_time = "";
+                let radios = document.getElementsByName("guide_time");
+                for(let i=0; i<radios.length; i++) {
+                    if(radios[i].checked){
+                        guide_time = radios[i].value;
+                    }
+                };
+                let booking_fee = 0;
+                if(guide_time == "morning"){
+                    booking_fee = 2000;
+                }else{
+                    booking_fee = 2500;
+                }
+
+                let headers = {
+                    "Content-Type" : "application/json"
+                };
+
+                let body = {
+                    "attractionId" : id,
+                    "date" : booking_date_text,
+                    "time" : guide_time,
+                    "price" : booking_fee
+                }
+                if(!(Object.values(body).includes(""))){
+                    fetch(booking_url, {
+                        method : "POST",
+                        headers : headers,
+                        body : JSON.stringify(body)
+                    })
+                        .then(response => response.json())
+                        .then((data) => {
+                            if(Object.keys(data).includes("ok")){
+                                location.href = "/booking"
+                            }else if(Object.keys(data).includes("error")){
+                                document.getElementById("error_message").style.display = "block";
+                                document.getElementById("error_message").textContent = data.message;
+                            };
+                        })     
+                }
+            }
+        }else{
+            document.getElementById("dialog").showModal();
+        }
+    });
 })

@@ -191,7 +191,62 @@ def SingIn():
 		resp.set_cookie(key="token", value="", expires=0)
 		return resp
 		
-		
+@app.route("/api/booking", methods=["GET", "POST", "DELETE"])
+def bookSchedule():
+	token = request.cookies.get("token")
+	if token == None:
+		return jsonify(error = True, message = "未登入系統，拒絕存取"),403
+	else:
+		if request.method == "POST":
+			booking_info = request.get_json()
+			member_info = jwt.decode(token, "secret", algorithms=["HS256"])
+			cnx = pool.get_connection()
+			cursor = cnx.cursor()
+			cursor.execute("""SELECT `id` FROM `booking` WHERE `member_id` = %s""", (member_info["id"],))
+			last_booking = cursor.fetchone()
+			if last_booking != []:
+				cursor.execute("""DELETE FROM `booking` WHERE `member_id` = %s""", (member_info["id"],))
+				cnx.commit()
+			cursor.execute("""INSERT INTO `booking`(`member_id`, `attraction_id`, `date`, `time`, `price`) VALUES(%s, %s, %s, %s, %s)""", (member_info["id"], int(booking_info["attractionId"]), booking_info["date"], booking_info["time"], booking_info["price"]))
+			cnx.commit()
+			cursor.close()
+			cnx.close()
+			return jsonify(ok = True)
 
+		elif request.method == "GET":
+			member_info = jwt.decode(token, "secret", algorithms=["HS256"])
+			cnx = pool.get_connection()
+			cursor = cnx.cursor(dictionary = True)
+			cursor.execute("""SELECT `booking`.`attraction_id`, `taipei`.`name`, `taipei`.`address`, `att_image`.`image`, `booking`.`date`, `booking`.`time`, `booking`.`price` FROM ((`taipei` INNER JOIN `booking` ON `taipei`.`id` = `booking`.`attraction_id`) INNER JOIN `att_image` ON `taipei`.`id` = `att_image`.`att_id`) WHERE `booking`.`member_id` = %s limit 1""", (member_info["id"],))
+			result = cursor.fetchone()
+			if result == None:
+				return jsonify(data = None)
+			else:
+				attraction = {
+					"id" : result["attraction_id"],
+					"name" : result["name"],
+					"address" : result["address"],
+					"image" : result["image"]
+				}
+
+				return_value = {
+					"attraction" : attraction,
+					"date" : result["date"],
+					"time" : result["time"],
+					"price" : result["price"]
+				}
+				cursor.close()
+				cnx.close()
+				return jsonify(data = return_value)
+
+		elif request.method == "DELETE":
+			cnx = pool.get_connection()
+			cursor = cnx.cursor()
+			member_info = jwt.decode(token, "secret", algorithms=["HS256"])
+			cursor.execute("""DELETE FROM `booking` WHERE `member_id` = %s""", (member_info["id"],))
+			cnx.commit()
+			cursor.close()
+			cnx.close()
+			return jsonify(ok = True)
 
 app.run(port=3000, host="0.0.0.0")

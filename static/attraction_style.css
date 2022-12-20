@@ -97,6 +97,7 @@ dialog > .dialog_box > .sign > .icon_close{
     top: 17px;
     right: 17px;
     z-index: 2;
+    cursor: pointer;
 }
 
 dialog > .dialog_box > .sign form{
@@ -272,10 +273,6 @@ main{
     accent-color: #448899;
 }
 
-/* .image_profile > .profile > .booking_form > .booking_time > input[type="radio"]:checked{
-    background-color: #448899;
-} */
-
 .image_profile > .profile > .booking_form > .booking_fee{
     display: grid;
     grid-auto-flow: column;
@@ -290,11 +287,18 @@ main{
     border-radius: 5px;
     width: 154px;
     margin-top: 25px;
+    cursor: pointer;
+    border: none;
+}
+
+.image_profile > .profile > .booking_form > .error{
+    color: red;
+    padding-left: 30.5px;
+    margin-top: 5px;
 }
 
 main > .info{
     margin-top: 40px;
-    /* height: 700px; */
     display: grid;
     width: 100%;
     padding: 10px;
@@ -340,9 +344,8 @@ footer{
         margin-top: 40px;
     }
 
-    .image_profile > .image{height: 420px;}
+    .image_profile > .image{height: 100%;}
     .image_profile > .profile{padding: 0px;}
-    /* main > .info{height: 500px;} */
 }
 
 @media(min-width:1200px){

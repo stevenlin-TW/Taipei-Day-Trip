@@ -1,0 +1,301 @@
+*{
+    margin: 0px;
+    box-sizing: border-box;
+    font-family: Noto Sans TC;
+}
+
+html, body{
+    height: 100%;
+}
+
+nav{
+    width:100%;
+    position: fixed;
+    top: 0px;
+    display: grid;
+    background-color: white;
+    padding: 10px;
+    z-index: 10;
+}
+
+nav > .top_box{
+    width: inherit;
+    display: grid;
+    grid-template-columns: auto 175px;
+    align-items: center;
+}
+
+nav > .top_box > .title{
+    justify-self: start;
+    font-size: 30px;
+    color: #448899;
+    cursor: pointer;
+}
+
+nav > .top_box > .option_list{
+    display: grid;
+    grid-auto-flow: column;
+    justify-content: space-between;
+    padding: 10px;
+}
+
+nav > .top_box > .option_list > .option{
+    font-size: 16px;
+    cursor: pointer;
+}
+
+nav > .top_box > .option_list > .option:hover{
+    text-decoration: underline;
+}
+
+dialog{
+    width: 340px;
+    background-color: white;
+    box-shadow: 0px 4px 60px #AAAAAA;
+    border-radius: 6px;
+    position: fixed;
+    top: 80px;
+    margin: 0 auto;
+    border: none;
+    padding: 0px;
+}
+
+dialog::backdrop{
+    background-color: rgba(0, 0, 0, 0.25);
+}
+
+dialog > .dialog_box{
+    display: grid;
+    width: 100%;
+    justify-content: center;
+    padding: 15px 0 15px 0;
+    position: relative;
+}
+
+dialog > .decorator_bar{
+    background: linear-gradient(270deg, #337788 0%, #66AABB 100%);
+    height: 10px;
+    width: 100%;
+}
+
+dialog > .dialog_box > .sign{
+    display: grid;
+    grid-template-columns: 310px;
+    justify-items: center;
+    row-gap: 10px;
+}
+
+dialog > .dialog_box > .sign > .sign_title{
+    font-weight: bold;
+    font-size: 24px;
+    color: #666666;
+}
+
+dialog > .dialog_box > .sign > .icon_close{
+    width: 16px;height: 16px;
+    position: absolute;
+    top: 17px;
+    right: 17px;
+    z-index: 2;
+    cursor: pointer;
+}
+
+dialog > .dialog_box > .sign form{
+    display: grid;
+    grid-template-columns: 310px;
+    row-gap: 10px;
+}
+
+dialog > .dialog_box > .sign form > input{
+    padding: 15px;
+    color: #757575;
+    font-size: 16px;
+    font-weight: 500;
+    border-radius: 5px;
+    width: 100%;
+    border: 1px solid #CCCCCC;
+}
+
+dialog > .dialog_box > .sign form > input.invalid{
+    border: 2px solid red;
+}
+
+dialog > .dialog_box > .sign form > .dialog_btn{
+    border-radius: 5px;
+    background-color: #448899;
+    padding: 10px 20px 10px 20px;
+    color: white;
+    font-size: 19px;
+    font-weight: 400;
+    width: 100%;
+    text-align: center;
+    cursor: pointer;
+    border: none;
+}
+
+dialog > .dialog_box > .sign > .click_to{
+    font-size: 16px;
+    font-weight: 500;
+    color: #666666;
+}
+
+dialog > .dialog_box > .sign > .click_to span{
+    cursor: pointer;
+}
+
+dialog > .dialog_box > .sign > .response_text{
+    color: red;
+}
+
+main{
+    padding-top: 100px;
+    width: 100%;
+}
+
+main > .headline{
+    width: 100%;
+    padding: 0 10px;
+    font-size: 19px;
+    font-weight: bold;
+    color: #666666;
+}
+
+main > .whole_box > .data_box{
+    display: grid;
+    padding: 0 10px;
+    margin-top: 35px;
+}
+
+main > .whole_box > .data_box > .image{
+    background-color: #666666;
+    width: 100%;height: 100%;
+}
+
+main > .whole_box > .data_box > .image img{
+    width: 100%;height: 100%;
+    object-fit: cover;
+}
+
+main > .whole_box > .data_box > .info_box{
+    position: relative;
+}
+
+main > .whole_box > .data_box > .info_box > .attraction{
+    font-size: 16px;
+    font-weight: bold;
+    color: #448899;
+    margin-top: 35px;
+}
+
+main > .whole_box > .data_box > .info_box > .booking_info{
+    margin-top: 30px;
+    display: grid;
+    row-gap: 20px;
+    width: 100%;
+    color: #666666;
+}
+
+main > .whole_box > .data_box > .info_box > .booking_info img{
+    position: absolute;
+    width: 30px;height: 30px;
+    bottom: 0px;right: 0px;
+    cursor: pointer;
+}
+
+.separator_main{
+    width: 95%;
+    margin: 40px auto;
+}
+
+main > .whole_box form{
+    width: 100%;
+    padding: 0 10px;
+}
+
+main > .whole_box form > .member_title, .card_title{
+    font-size: 19px;
+    font-weight: bold;
+}
+
+main > .whole_box form > .member_name, .card_number, .submit_btn{margin-top: 25px;}
+
+main > .whole_box form > .member_email, .member_phone, .note, .card_expire, .card_cvc{margin-top: 15px;}
+
+
+main > .whole_box form > div input{
+    padding: 10px;
+}
+
+main > .whole_box form > .note{font-weight: bold;}
+
+main > .whole_box form > .payment{
+    display: flex;
+    justify-content: end;
+}
+
+main > .whole_box form > .button_box{
+    display: flex;
+    justify-content: end;
+    margin-top: 25px;
+}
+
+main > .whole_box form > .button_box button{
+    border: none;
+    text-align: center;
+    cursor: pointer;
+    border-radius: 5px;
+    background-color: #448899;
+    padding: 10px 20px 10px 20px;
+    color: white;
+    font-size: 19px;
+    font-weight: 400;
+    width: 200px;
+}
+
+main > .empty_state{
+    margin-top: 35px;
+    color: #666666;
+    width: 100%;
+    padding: 0 10px;
+}
+
+
+footer{
+    position: relative;
+    background-color: #757575;
+    width: 100%;
+    height: 100px;
+    margin-top: 40px;
+}
+
+footer div{
+    color: white;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 16px;
+    width: 100%;
+    text-align: center;
+    position: absolute;
+    top: 45px;
+
+}
+
+@media(min-width:600px){
+    main > .whole_box > .data_box{grid-template-columns: 266px auto;align-items: start;}
+    main > .whole_box > .data_box > .info_box{padding-left: 25px; padding-top: 10px;}
+    main > .whole_box > .data_box > .info_box > .attraction{margin: 0;}
+    main > .whole_box > .data_box > .info_box > .booking_info img{top: 0px;}
+}
+
+@media(min-width:1000px){
+    main > .headline{width:1000px;padding: 0;margin: 0 auto;}
+    main > .whole_box > .data_box{width:1000px;margin-left: auto; margin-right: auto;}
+    main > .whole_box form{width: 1000px;margin: 0 auto;}
+    main > .empty_state{width: 980px;padding: 0;margin-left: auto;margin-right: auto;}
+}
+
+@media(min-width:1200px){
+    nav{justify-content: center;}
+    nav > .top_box{width: 1200px;}
+    .separator_main{width: 1200px;}
+}
