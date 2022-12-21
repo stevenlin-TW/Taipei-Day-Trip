@@ -1,7 +1,7 @@
 var page = 0;
 let keyword = document.getElementById("search_bar").value;
 let isLoading = false;
-let url = "http://127.0.0.1:3000/api/attractions?page=" + page.toString();
+let url = "/api/attractions?page=" + page.toString();
 isLoading = true;
 fetch(url).then((response) => {
     return response.json();
@@ -46,7 +46,7 @@ fetch(url).then((response) => {
     let attractions = document.getElementsByClassName("item");
     for(let i=0; i<attractions.length; i++){
         attractions[i].addEventListener("click", () => {
-            window.location.href = "http://127.0.0.1:3000/attraction/" + attractions[i].id;
+            window.location.href = "/attraction/" + attractions[i].id;
         })
     }
     page = data["nextPage"];
@@ -59,9 +59,9 @@ const callback = (entries, observer) => {
     }else{
         if(!isLoading){
             if (keyword != ""){
-                url = "http://127.0.0.1:3000/api/attractions?page=" + page.toString() + "&keyword=" + keyword;
+                url = "/api/attractions?page=" + page.toString() + "&keyword=" + keyword;
             }else{
-                url = "http://127.0.0.1:3000/api/attractions?page=" + page.toString();
+                url = "/api/attractions?page=" + page.toString();
             }
             isLoading = true;
             fetch(url).then((response) => {
@@ -107,7 +107,7 @@ const callback = (entries, observer) => {
                 let attractions = document.getElementsByClassName("item");
                 for(let i=0; i<attractions.length; i++){
                     attractions[i].addEventListener("click", () => {
-                        window.location.href = "http://127.0.0.1:3000/attraction/" + attractions[i].id;
+                        window.location.href = "/attraction/" + attractions[i].id;
                     })
                 }
                 page = data["nextPage"];
@@ -132,7 +132,7 @@ search.addEventListener("click", () => {
     if (keyword != ""){
         page = 0;
         document.getElementById("attraction_group").innerHTML = "";
-        url = "http://127.0.0.1:3000/api/attractions?page=" + page.toString() + "&keyword=" + keyword;
+        url = "/api/attractions?page=" + page.toString() + "&keyword=" + keyword;
         isLoading = true;
         fetch(url).then((response) => {
             return response.json();
@@ -179,7 +179,7 @@ search.addEventListener("click", () => {
                 let attractions = document.getElementsByClassName("item");
                 for(let i=0; i<attractions.length; i++){
                     attractions[i].addEventListener("click", () => {
-                        window.location.href = "http://127.0.0.1:3000/attraction/" + attractions[i].id;
+                        window.location.href = "/attraction/" + attractions[i].id;
                     })
                 };
                 page = data["nextPage"];
@@ -201,7 +201,7 @@ document.addEventListener("click", (e) => {
 })
 
 let cat_list = document.getElementById("cat_list");
-let cat_url = "http://127.0.0.1:3000/api/categories";
+let cat_url = "/api/categories";
 fetch(cat_url).then((response) => {
     return response.json();
 }).then((categories) => {
