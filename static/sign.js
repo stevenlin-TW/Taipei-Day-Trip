@@ -1,5 +1,5 @@
 // Check User Status
-let check_url = "http://127.0.0.1:3000/api/user/auth"; 
+const check_url = "/api/user/auth"; 
 fetch(check_url, {
     method : "GET"
 }).then(response => response.json()).then((data) => {
@@ -79,7 +79,7 @@ sign_up_btn.addEventListener("click", () => {
         "password" : new_password
     };
 
-    let url = "http://127.0.0.1:3000/api/user";
+    let url = "/api/user";
 
     fetch(url, {
         method : "POST",
@@ -96,7 +96,6 @@ sign_up_btn.addEventListener("click", () => {
             }else if(Object.keys(data).includes("error")){
                 document.getElementById("sign_up_response_text").style.display = "block";
                 document.getElementById("sign_up_response_text").textContent = data.message;
-                return false;
             };
         })
     
@@ -112,7 +111,7 @@ sign_in_btn.addEventListener("click", () => {
     let password = document.getElementById("password").value;
 
     
-    let url = "http://127.0.0.1:3000/api/user/auth";
+    let url = "/api/user/auth";
 
     let headers = {
         "Content-Type" : "application/json"
@@ -146,12 +145,27 @@ sign_out.addEventListener("click", () => {
     fetch(check_url, {method : "DELETE"}).then(response => response.json())
     .then((data) => {
         if(Object.keys(data).includes("ok")){
-            location.reload();
+            location.href = "/";
         }
     })
 })
 
 // To Index
 document.querySelector(".title").addEventListener("click", () => {
-    location.href = "http://127.0.0.1:3000/"
+    location.href = "/";
+})
+
+
+// To booking
+booking_page = document.getElementById("booking");
+booking_page.addEventListener("click", () => {
+    fetch(check_url, {
+        method : "GET"
+    }).then(response => response.json()).then((data) => {
+        if(data["data"] != null){
+            location.href = "/booking";
+        }else{
+            dialog.showModal();
+        }
+    });
 })
