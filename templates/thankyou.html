@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta name = "viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <title>Taipei-Day-Trip</title>
+        <link rel="stylesheet" type="text/css" href={{ url_for('static', filename='thankyou_style.css') }} />
+    </head>
+    <body>
+        <nav style="border-bottom: 1px solid #E8E8E8;"></nav>
+        <dialog id="dialog">
+            <div class="decorator_bar"></div>
+            <div class="dialog_box">
+                <div class="sign" id="sign_in">
+                    <div class="sign_title">登入會員帳號</div>
+                    <img class="icon_close" src={{ url_for ('static', filename='icon_close.png') }} alt="close" />
+                    <form onsubmit="return false;">
+                        <input class="dialog_input" id="email" type="text" placeholder="輸入電子信箱" pattern="^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$" required autofocus/>
+                        <input class="dialog_input" id="password" type="password" placeholder="輸入密碼" required />
+                        <button type="submit" class="dialog_btn" id="sign_in_btn">登入帳戶</button>
+                    </form>
+                    <div class="response_text" id="sign_in_response_text" style="display: none;"></div>
+                    <div class="click_to">還沒有帳戶？<span>點此註冊</span></div>
+                </div>
+                <div class="sign" id="sign_up" style="display: none;">
+                    <div class="sign_title">註冊會員帳號</div>
+                    <img class="icon_close" src={{ url_for ('static', filename='icon_close.png') }} alt="close" />
+                    <form onsubmit="return false;">
+                        <input class="dialog_input" id="new_name" type="text" placeholder="輸入姓名" pattern="[a-zA-Z0-9]+" required autofocus/>
+                        <input class="dialog_input" id="new_email" type="text" placeholder="輸入電子信箱" pattern="^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$" required />
+                        <input class="dialog_input" id="new_password" type="password" placeholder="輸入密碼" pattern="[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-@]" minlength="8" maxlength="15" required />
+                        <button type="submit" class="dialog_btn" id="sign_up_btn">註冊新帳戶</button>
+                    </form>
+                    <div class="response_text" id="sign_up_response_text" style="display: none;"></div>
+                    <div class="click_to">已經有帳戶了？<span>點此登入</span></div>
+                </div>
+            </div>
+        </dialog>
+        <main>
+            <div class="headline"></div>
+            <div class="note" style="margin-top: 20px;">※ 當天請記得隨時注意手機，導遊將透過電話聯絡您。</div>
+            <div class="note">※ 亦請將訂單編號記下來，遇到問題時請提供給客服，以便後續處理。</div>
+        </main>
+        <footer id="footer"><div>COPYRIGHT © 2021 台北一日遊</div></footer>
+        <script src={{ url_for("static", filename = "nav.js")}}></script>
+        <script src={{ url_for("static", filename = "sign.js")}}></script>
+        <script src={{ url_for("static", filename = "thankyou.js")}}></script>
+    </body>
+</html>
