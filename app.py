@@ -288,8 +288,15 @@ def orderSchedule():
 			pay_status = True
 			cnx = pool.get_connection()
 			cursor = cnx.cursor()
+
+			# Insert Into Order
 			cursor.execute("""INSERT INTO `orders`(`order_no`, `pay_status`, `member_id`, `phone`, `attraction_id`, `price`, `date`, `time`) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)""",(order_no, pay_status, member_info["id"], booking_info["order"]["contact"]["phone"], booking_info["order"]["trip"]["attraction"]["id"], booking_info["order"]["price"], booking_info["order"]["trip"]["date"], booking_info["order"]["trip"]["time"]))
 			cnx.commit()
+			
+			# Delete From Booking
+			cursor.execute("""DELETE FROM `booking` WHERE member_id = %s""", (member_info["id"],))
+			cnx.commit()
+	
 			cursor.close()
 			cnx.close()
 			return_value = {
