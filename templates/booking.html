@@ -54,21 +54,31 @@
                     </div>
                 </div>
                 <hr class="separator_main" color="#E8E8E8" size="1px"/>
-                <form onsubmit="return false;" class="info_form">
+                <form onsubmit="onSubmit(event)" class="info_form">
                     <div class="member_title">您的聯絡資訊</div>
                     <div class="member_name">聯絡姓名： <input type="text" id="input_name" required /></div>
                     <div class="member_email">聯絡信箱： <input type="email" id="input_email" pattern="^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$" required /></div>
-                    <div class="member_phone">手機號碼： <input type="tel" pattern="[0-9]{4}-[0-9]{3}-[0-9]{3}" placeholder="0912-345-678" required /></div>
+                    <div class="member_phone">手機號碼： <input type="tel" id="input_phone" pattern="[0-9]{4}-[0-9]{3}-[0-9]{3}" placeholder="0912-345-678" required /></div>
                     <div class="note">請保持手機暢通，準時到達，導覽人員將用手機與您聯絡，務必留下正確的聯絡方式。</div>
                     <hr class="separator_main" color="#E8E8E8" size="1px"/>
                     <div class="card_title">信用卡付款資訊</div>
-                    <div class="card_number">卡片號碼： <input type="tel" pattern="[0-9]{16}" autocomplete="cc-number" placeholder="**** **** **** ****" /></div>
-                    <div class="card_expire">過期時間： <input type="tel" pattern="[0-9]{2} / [0-9]{2}" maxlength="7" placeholder="MM / YY" /></div>
-                    <div class="card_cvc">驗證密碼： <input type="tel" pattern="\d*" maxlength="3" placeholder="CVV" /></div>
+                    <div class="card_info" style="margin-top: 25px;">
+                        <div>卡片號碼：</div>
+                        <div class="tpfield" id="card-number"></div>
+                    </div>
+                    <div class="card_info" style="margin-top: 15px;">
+                        <div>過期時間：</div>
+                        <div class="tpfield" id="card-expiration-date"></div>
+                    </div>
+                    <div class="card_info" style="margin-top: 15px;">
+                        <div>驗證密碼：</div>
+                        <div class="tpfield" id="card-ccv"></div>
+                    </div>
+                    
                     <hr class="separator_main" color="#E8E8E8" size="1px"/>
                     <div class="payment"></div>
                     <div class="button_box">
-                        <button type="submit">確認訂購並付款</button>
+                        <button type="submit" id="pay_btn">確認訂購並付款</button>
                     </div> 
                 </form>
             </div>
@@ -78,5 +88,7 @@
         <script src={{ url_for("static", filename = "nav.js")}}></script>
         <script src={{ url_for("static", filename = "sign.js")}}></script>
         <script src={{ url_for("static", filename = "booking.js")}}></script>
+        <script src="https://js.tappaysdk.com/sdk/tpdirect/v5.14.0"></script>
+        <script src={{ url_for("static", filename = "tpdirect.js")}}></script>
     </body>
 </html>

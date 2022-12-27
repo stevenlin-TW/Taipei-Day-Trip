@@ -4,6 +4,7 @@ import urllib.error
 import unicodedata
 import jwt
 import time
+import urllib.request as req
 app=Flask(__name__)
 app.config["JSON_AS_ASCII"]=False
 app.config["TEMPLATES_AUTO_RELOAD"]=True
@@ -248,5 +249,74 @@ def bookSchedule():
 	finally:
 		cursor.close()
 		cnx.close()
+
+@app.route("/api/orders", methods=["POST", "GET"])
+def orderSchedule():
+	try:
+		token = request.cookies.get("token")
+		if token == None:
+				return jsonify(error = True, message = "未登入系統，拒絕存取"),403
+
+		member_info = jwt.decode(token, "secret", algorithms=["HS256"])
+		booking_info = request.get_json()
+		#需要驗證booking_info嗎？
+		order_time = time.localtime()
+		order_no = time.strftime("%Y%m%d%H%M%S", order_time)
+		url = "https://sandbox.tappaysdk.com/tpc/payment/pay-by-prime"
+		pay_request_body = {
+			"prime" : booking_info["prime"],
+			"partner_key" : "partner_fqUnMeZkmqenfnEYVZ8QnBK8Q94AnumwFmMkuHu6SuvD1XHa69chyW0z",
+			"merchant_id" : "LTHTaiwan123_ESUN",
+			"details" : "TapPay Test",
+			"amount" : booking_info["order"]["price"],
+			"cardholder" : {
+				"phone_number" : booking_info["order"]["contact"]["phone"],
+				"name" : booking_info["order"]["contact"]["name"],
+				"email" : booking_info["order"]["contact"]["email"],
+				},
+			"remember" : True
+		}
+		pay_request = req.Request(url,headers={
+			"Content-Type" : "application/json",
+			"x-api-key" : "partner_fqUnMeZkmqenfnEYVZ8QnBK8Q94AnumwFmMkuHu6SuvD1XHa69chyW0z"
+		}, data = json.dumps(pay_request_body).encode("utf-8"))
+
+		with req.urlopen(pay_request) as response:
+			data = response.read().decode("utf-8")
+		data = json.loads(data)
+		if data["status"] == 0:
+			pay_status = True
+			cnx = pool.get_connection()
+			cursor = cnx.cursor()
+
+			# Insert Into Order
+			cursor.execute("""INSERT INTO `orders`(`order_no`, `pay_status`, `member_id`, `phone`, `attraction_id`, `price`, `date`, `time`) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)""",(order_no, pay_status, member_info["id"], booking_info["order"]["contact"]["phone"], booking_info["order"]["trip"]["attraction"]["id"], booking_info["order"]["price"], booking_info["order"]["trip"]["date"], booking_info["order"]["trip"]["time"]))
+			cnx.commit()
+			
+			# Delete From Booking
+			cursor.execute("""DELETE FROM `booking` WHERE member_id = %s""", (member_info["id"],))
+			cnx.commit()
+	
+			cursor.close()
+			cnx.close()
+			return_value = {
+				"number" : order_no,
+				"payment" : {
+					"status" : data["status"],
+					"message" : "付款成功"
+				}
+			}
+			return jsonify(data=return_value)
+		else:
+			return_value = {
+				"number" : None,
+				"payment" : {
+					"status" : data["status"],
+					"message" : data["msg"]
+				}
+			}
+			return jsonify(data=return_value)
+	except:
+		return jsonify(error = True, message = "伺服器內部錯誤"),500
 
 app.run(port=3000, host="0.0.0.0")

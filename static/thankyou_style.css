@@ -8,6 +8,11 @@ html, body{
     height: 100%;
 }
 
+body{
+    display: flex;
+    flex-direction: column;
+}
+
 nav{
     width:100%;
     position: fixed;
@@ -160,119 +165,20 @@ main > .headline{
     color: #666666;
 }
 
-main > .whole_box > .data_box{
-    display: grid;
-    padding: 0 10px;
-    margin-top: 35px;
-}
-
-main > .whole_box > .data_box > .image{
-    background-color: #666666;
-    width: 100%;height: 100%;
-}
-
-main > .whole_box > .data_box > .image img{
-    width: 100%;height: 100%;
-    object-fit: cover;
-}
-
-main > .whole_box > .data_box > .info_box{
-    position: relative;
-}
-
-main > .whole_box > .data_box > .info_box > .attraction{
-    font-size: 16px;
-    font-weight: bold;
-    color: #448899;
-    margin-top: 35px;
-}
-
-main > .whole_box > .data_box > .info_box > .booking_info{
-    margin-top: 30px;
-    display: grid;
-    row-gap: 20px;
+main > .note{
     width: 100%;
+    padding: 0 10px;
+    margin-left: auto;
+    margin-right: auto;
     color: #666666;
+    line-height: 150%;
 }
 
-main > .whole_box > .data_box > .info_box > .booking_info img{
-    position: absolute;
-    width: 30px;height: 30px;
-    bottom: 0px;right: 0px;
+main > .headline span{
+    text-decoration: underline;
     cursor: pointer;
+    color:rgba(25, 83, 227, 0.841);
 }
-
-.separator_main{
-    width: 95%;
-    margin: 40px auto;
-}
-
-main > .whole_box form{
-    width: 100%;
-    padding: 0 10px;
-}
-
-main > .whole_box form > div input{
-    padding: 10px;
-    width: 200px;
-    height: 40px;
-}
-
-main > .whole_box form > .member_title, .card_title{
-    font-size: 19px;
-    font-weight: bold;
-}
-
-main > .whole_box form > .member_name, .submit_btn{margin-top: 25px;}
-
-main > .whole_box form > .member_email, .member_phone, .note{margin-top: 15px;}
-
-.card_info{
-    display: flex;
-    align-items:center;
-}
-
-.tpfield {
-    height: 40px;
-    width: 200px;
-    border: 1px solid gray;
-    padding: 10px;
-}
-
-
-main > .whole_box form > .note{font-weight: bold;}
-
-main > .whole_box form > .payment{
-    display: flex;
-    justify-content: end;
-}
-
-main > .whole_box form > .button_box{
-    display: flex;
-    justify-content: end;
-    margin-top: 25px;
-}
-
-main > .whole_box form > .button_box button{
-    border: none;
-    text-align: center;
-    cursor: pointer;
-    border-radius: 5px;
-    background-color: #448899;
-    padding: 10px 20px 10px 20px;
-    color: white;
-    font-size: 19px;
-    font-weight: 400;
-    width: 200px;
-}
-
-main > .empty_state{
-    margin-top: 35px;
-    color: #666666;
-    width: 100%;
-    padding: 0 10px;
-}
-
 
 footer{
     position: relative;
@@ -280,6 +186,7 @@ footer{
     width: 100%;
     height: 100px;
     margin-top: 40px;
+    flex-grow: 1;
 }
 
 footer div{
@@ -293,21 +200,10 @@ footer div{
     top: 45px;
 }
 
-@media(min-width:600px){
-    main > .whole_box > .data_box{grid-template-columns: 266px auto;align-items: start;}
-    main > .whole_box > .data_box > .info_box{padding-left: 25px; padding-top: 10px;}
-    main > .whole_box > .data_box > .info_box > .attraction{margin: 0;}
-    main > .whole_box > .data_box > .info_box > .booking_info img{top: 0px;}
-}
-
-@media(min-width:1000px){
-    main > .headline{width:1000px;padding: 0;margin: 0 auto;}
-    main > .whole_box > .data_box{width:1000px;margin-left: auto; margin-right: auto;}
-    main > .whole_box form{width: 1000px;margin: 0 auto;}
-    main > .empty_state{width: 980px;padding: 0;margin-left: auto;margin-right: auto;}
-}
 
 @media(min-width:1200px){
+    main > .headline{width:1200px;padding: 0;margin: 0 auto;}
+    main > .note{width: 1200px; padding: 0;}
     nav{justify-content: center;}
     nav > .top_box{width: 1200px;}
     .separator_main{width: 1200px;}
